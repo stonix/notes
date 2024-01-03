@@ -7,6 +7,10 @@ notes_version="1.3.0"
 QUICKNOTE_FORMAT="quicknote-%Y-%m-%d"
 NOTES_EXT="md"
 TEMPLATES_DIR=".templates"
+
+# Reader for the show command
+READER="cat"
+
 # Look for configuration file at ~/.config/notes/config and use it
 if [ -f ~/.config/notes/config ]; then
     . ~/.config/notes/config
@@ -314,6 +318,19 @@ cat_note() {
     cat "$note_path"
 }
 
+read_note() {
+    local note_path=$1
+
+    if [[ -z "$note_path" ]]; then
+        printf "Cat requires a name, but none was provided.\n"
+        exit 1
+    fi
+
+    note_path=$( get_full_note_path "$note_path" )
+
+    ${READER} "$note_path"
+}
+
 usage() {
   local name=$(basename $0)
 	cat <<EOF
@@ -330,7 +347,8 @@ Usage:
     $name append|a <name> [message]       # Appends a note. Will use stdin if no message is given
     $name mv <source> <dest>|<directory>  # Rename a note, or move a note when a directory is given
     $name rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
-    $name cat|c <name>                    # Display note
+    $name cat|c <name>                    # Display note with cat
+    $name read|r <name>                   # Display note with custom reader. Can be set in config with READER, default is cat
     echo <name> | $name open|o            # Open all note filenames piped in
     echo <name> | $name cat               # Display all note filenames piped in
     $name --help                          # Print this usage information
@@ -396,6 +414,9 @@ main() {
             ;;
         "cat" | "c" )
             cmd="handle_multiple_notes cat"
+            ;;
+        "read" | "r" )
+            cmd="handle_multiple_notes read"
             ;;
         --help | -help | -h )
             cmd="usage"
