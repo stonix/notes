@@ -311,7 +311,13 @@ cat_note() {
 
     note_path=$( get_full_note_path "$note_path" )
 
-    cat "$note_path"
+    glow_installed=$(command -v glow &> /dev/null)
+
+    if [ -n "$glow_installed" ]; then
+        glow "$note_path"
+    else
+        cat "$note_path"
+    fi
 }
 
 realpath() {
