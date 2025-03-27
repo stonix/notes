@@ -43,3 +43,6 @@ uninstall:
 	rm -f $(USERDIR)/.config/notes/config.example
 
 	@printf "\nNotes has now been uninstalled.\n"
+
+install-bash-auto-completion:
+	cp notes.bash_completion /opt/homebrew/share/bash-completion/completions/notes
