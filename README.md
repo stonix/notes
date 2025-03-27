@@ -1,9 +1,4 @@
 ## FORK!
-### `notes read|r`
-
-Display a note using `$READER`. The shorthand is `notes r`. You can set `$READER` in `~/.config/notes/config`, the default if not set is `cat`.
-
-Functionally the same as `notes cat <name> | ${READER}`.
 
 # notes [![Build Status](https://github.com/pimterry/notes/workflows/CI/badge.svg)](https://github.com/pimterry/notes/actions)
 Simple delightful note taking, with none of the lock-in.
@@ -158,6 +153,9 @@ Removes the given note if it exists. If `-r` or `--recursive` is given, deletes 
 
 ### `notes cat <note-name>`
 Displays the note. Shorthand alias also available with `notes c`.
+
+### `notes read|r <note-name>`
+Display a note using `$READER`. The shorthand is `notes r`. You can set `$READER` in `~/.config/notes/config`, the default if not set is `cat`. Functionally the same as `notes cat <name> | ${READER}`.
 
 ### `notes grep/find <pattern> | notes open`
 
